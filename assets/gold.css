@@ -137,3 +137,18 @@
 .explore a{font-weight:700;font-size:1.05rem}
 .explore .kind{display:block;font:700 .72rem system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#a67c2e;margin-bottom:.2em}
 .explore p{margin:.3em 0 0;font-size:.92rem;line-height:1.5}
+
+/* Opener: documents revealed line by line */
+.doc-reveal .doc-lines{margin:.2em 0 .6em}
+.doc-reveal .doc-line{margin:0 0 .7em}
+.doc-reveal .doc-line.letter-sign{text-align:right;font-style:italic;margin:1em 0 0}
+.doc-reveal .doc-next{margin:.2em 0 .8em}
+#qld-disco .map{height:min(52vh,420px);margin:1em 0 .6em}
+#archive-note[hidden]{display:none}
+@media print{
+  .doc-reveal .doc-line{display:block!important}
+  .doc-reveal .doc-next,.route .map-bar{display:none!important}
+}
+@media (prefers-reduced-motion: reduce){
+  .doc-reveal .doc-line{display:block!important}
+}

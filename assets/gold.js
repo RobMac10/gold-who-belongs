@@ -261,7 +261,27 @@
     b.addEventListener('change', upd); upd();
   }
 
-  window.initGold = function () { game(); arrivals(); licence(); basket(); };
+
+  /* ---------------- Documents revealed line by line ---------------- */
+  function docReveal() {
+    $$('.doc-reveal').forEach(function (box) {
+      if (box.dataset.ready) return; box.dataset.ready = '1';
+      var lines = $$('.doc-line', box), btn = $('.doc-next', box);
+      if (!lines.length) return;
+      var i = 0;
+      function show() {
+        lines.forEach(function (el, k) { el.hidden = k > i; });
+        if (!btn) return;
+        if (i >= lines.length - 1) { btn.hidden = true; }
+        else { btn.hidden = false; btn.textContent = i === 0 ? 'Tap to read the next line' : 'Tap to read the next line'; }
+      }
+      if (reduce) { i = lines.length - 1; show(); return; }
+      show();
+      if (btn) btn.addEventListener('click', function () { i = Math.min(lines.length - 1, i + 1); show(); });
+    });
+  }
+
+  window.initGold = function () { game(); arrivals(); licence(); basket(); docReveal(); };
   document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[role=tab]'); if (t) setTimeout(window.initGold, 60); });
   if (document.readyState !== 'loading') setTimeout(window.initGold, 60); else document.addEventListener('DOMContentLoaded', function () { setTimeout(window.initGold, 60); });
 })();
