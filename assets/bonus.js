@@ -2,8 +2,6 @@
 (function () {
   var B = window.BONUS || {};
   var OSM = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var flyMs = reduce ? 0 : 0.8;
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
   function srcLink(u, label) { return u ? ' <a class="src-btn" href="' + u + '" target="_blank" rel="noopener">' + esc(label || 'See the source') + ' ↗</a>' : ''; }
   function baseMap(el, opts) {
@@ -29,11 +27,11 @@
       count.textContent = 'Stop ' + (i + 1) + ' of ' + cfg.stops.length;
       prev.disabled = i === 0; next.disabled = i === cfg.stops.length - 1;
       markers.forEach(function (mk, j) { var el = mk.getElement(); if (el) el.classList.toggle('on', j === i); });
-      if (m) m.flyTo(s.ll, s.z || 7, { duration: flyMs });
+      if (m) m.flyTo(s.ll, s.z || 7, { duration: 0.8 });
     }
     prev.addEventListener('click', function () { go(i - 1); });
     next.addEventListener('click', function () { go(i + 1); });
-    box.querySelector('.whole').addEventListener('click', function () { if (m) m.flyToBounds(L.latLngBounds(cfg.stops.map(function (s) { return s.ll; })), { padding: [30, 30], duration: flyMs }); });
+    box.querySelector('.whole').addEventListener('click', function () { if (m) m.flyToBounds(L.latLngBounds(cfg.stops.map(function (s) { return s.ll; })), { padding: [30, 30], duration: 0.8 }); });
     go(0); if (m) setTimeout(function () { m.invalidateSize(); m.fitBounds(L.latLngBounds(cfg.stops.map(function (s) { return s.ll; })), { padding: [30, 30] }); }, 50);
   }
   // ---------- Places map ----------
@@ -48,7 +46,7 @@
       var btn = li.querySelector('button'), body = li.querySelector('.place-body');
       var mk = null;
       if (m) { mk = L.marker(p.ll, { icon: pin(k + 1), title: p.name }).addTo(m).bindPopup('<div class="pop">' + html + '</div>', { maxWidth: 260, autoPanPadding: [20, 20] }); bounds.push(p.ll); }
-      btn.addEventListener('click', function () { var open = body.hidden; body.hidden = !open; btn.setAttribute('aria-expanded', String(open)); if (open && m && mk) { m.closePopup(); m.once('moveend', function () { mk.openPopup(); }); m.flyTo(p.ll, p.z || 11, { duration: reduce ? 0 : 0.7 }); } });
+      btn.addEventListener('click', function () { var open = body.hidden; body.hidden = !open; btn.setAttribute('aria-expanded', String(open)); if (open && m && mk) { m.closePopup(); m.once('moveend', function () { mk.openPopup(); }); m.flyTo(p.ll, p.z || 11, { duration: 0.7 }); } });
     });
     if (m) { m.fitBounds(bounds, { padding: [24, 24] }); setTimeout(function () { m.invalidateSize(); m.fitBounds(bounds, { padding: [24, 24] }); }, 50); }
   }

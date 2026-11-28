@@ -12,26 +12,12 @@
     if (scroll !== undefined && history.replaceState) history.replaceState(null, '', '#' + name);
     grow();
     if (window.initBonus) setTimeout(window.initBonus, 30);
-    if (scroll) {
-      var note = document.getElementById('archive-note');
-      if (note) note.hidden = true;
-      var t = document.querySelector('.tabs'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (scroll) { var t = document.querySelector('.tabs'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   }
   tabs.forEach(function (t) { t.addEventListener('click', function () { show(t.dataset.tab, true); }); });
   [].forEach.call(document.querySelectorAll('[data-goto]'), function (b) { b.addEventListener('click', function (e) { e.preventDefault(); show(b.dataset.goto, true); }); });
-  var archived = {};
-  try { archived = JSON.parse(document.body.dataset.archived || '{}'); } catch (e) {}
   function fromHash() {
     var h = (location.hash || '').replace('#', '');
-    if (h && archived[h]) {
-      var note = document.getElementById('archive-note');
-      var link = document.getElementById('archive-link');
-      if (link) link.href = archived[h];
-      if (note) note.hidden = false;
-      show(names[0]);
-      return;
-    }
     var el = h && document.getElementById(h);
     if (el && el.tagName === 'DETAILS') { var p = el.closest('.panel'); show(p.id); el.open = true; el.scrollIntoView(); return; }
     show(h);
