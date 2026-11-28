@@ -12,4 +12,3 @@ Static site, no build step needed to view (`index.html`). The older generator in
 
 Search engines are asked not to index this app (`noindex` and `robots.txt`).
 
-Do not publish or push until you are told to.
